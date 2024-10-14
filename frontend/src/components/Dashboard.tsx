@@ -21,8 +21,17 @@ export default function Dashboard() {
     const [startDate, setStartDate] = useState<Date | undefined>(undefined);
     const [endDate, setEndDate] = useState<Date | undefined>(undefined);
 
-    const handleParseComplete = (data: ParsedDataEntry[]) => {
-        setParsedData(data);
+    const handleParseComplete = (data: Record<string, string>[]) => {
+        const parsedEntries: ParsedDataEntry[] = data.map((entry) => ({
+            arrival_date_year: entry.arrival_date_year,
+            arrival_date_month: entry.arrival_date_month,
+            arrival_date_day_of_month: entry.arrival_date_day_of_month,
+            country: entry.country,
+            adults: entry.adults || "0",
+            children: entry.children || "0",
+            babies: entry.babies || "0",
+        }));
+        setParsedData(parsedEntries);
     };
 
     const getChartData = () => {
@@ -74,45 +83,56 @@ export default function Dashboard() {
     const childrenVisitorsData = getSparklineData('children');
 
     return (
-        <div style={{ paddingBottom: '50px', overflow: 'auto' }}>  {/* Add padding and overflow */}
+        <div style={{ padding: '20px', overflow: 'auto', maxWidth: '100%' }}>
             <h1>Booking Insights</h1>
 
             <div style={{ marginBottom: '20px' }}>
                 <h2>Select the Date Range</h2>
-                <DatePicker
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date || undefined)}
-                    selectsStart
-                    startDate={startDate}
-                    endDate={endDate}
-                    placeholderText="Start Date"
-                />
-                <DatePicker
-                    selected={endDate}
-                    onChange={(date) => setEndDate(date || undefined)}
-                    selectsEnd
-                    startDate={startDate}
-                    endDate={endDate}
-                    placeholderText="End Date"
-                />
+                <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center'  }}>
+                    <DatePicker
+                        selected={startDate}
+                        onChange={(date) => setStartDate(date || undefined)}
+                        selectsStart
+                        startDate={startDate}
+                        endDate={endDate}
+                        placeholderText="Start Date"
+                        style={{ width: '200px' }}
+                    />
+                    <DatePicker
+                        selected={endDate}
+                        onChange={(date) => setEndDate(date || undefined)}
+                        selectsEnd
+                        startDate={startDate}
+                        endDate={endDate}
+                        placeholderText="End Date"
+                        style={{ width: '200px' }}
+                    />
+                </div>
             </div>
 
-            <div style={{ width: '1500px', marginLeft: "250px", marginTop: "100px" }}>
-                {timeSeriesData.length > 0 && <TimeSeriesChart data={timeSeriesData} />}
-            </div>
-
-            <div style={{ width: '1500px', marginLeft: "250px", marginTop: "100px" }}>
-                {columnChartData.length > 0 && <ColumnChart data={columnChartData} />}
-            </div>
-
-            <div style={{ width: '1500px', marginLeft: "250px", marginTop: "100px" }}>
-                <h2 style={{ textAlign: "left" }}>Total Adult Visitors</h2>
-                {adultVisitorsData.length > 0 && <SparklineChart data={adultVisitorsData} label="Adult Visitors" />}
-            </div>
-
-            <div style={{ width: '1500px', marginLeft: "250px", marginTop: "100px", paddingBottom: '100px' }}> {/* Increased padding-bottom */}
-                <h2 style={{ textAlign: "left" }}>Total Children Visitors</h2>
-                {childrenVisitorsData.length > 0 && <SparklineChart data={childrenVisitorsData} label="Children Visitors" />}
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                {timeSeriesData.length > 0 && (
+                    <div style={{ width: '100%', maxWidth: '1200px', marginTop: '50px' }}>
+                        <TimeSeriesChart data={timeSeriesData} />
+                    </div>
+                )}
+                {columnChartData.length > 0 && (
+                    <div style={{ width: '100%', maxWidth: '1200px', marginTop: '50px' }}>
+                        <ColumnChart data={columnChartData} />
+                    </div>
+                )}
+                {adultVisitorsData.length > 0 && (
+                    <div style={{ width: '100%', maxWidth: '1200px', marginTop: '50px' }}>
+                        <h2>Total Adult Visitors</h2>
+                        <SparklineChart data={adultVisitorsData} label="Adult Visitors" />
+                    </div>
+                )}
+                {childrenVisitorsData.length > 0 && (
+                    <div style={{ width: '100%', maxWidth: '1200px', marginTop: '50px', marginBottom: '50px' }}>
+                        <h2>Total Children Visitors</h2>
+                        <SparklineChart data={childrenVisitorsData} label="Children Visitors" />
+                    </div>
+                )}
             </div>
 
             <Parser onParseComplete={handleParseComplete} />

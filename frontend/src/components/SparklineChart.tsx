@@ -1,12 +1,12 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
-import { ApexOptions } from 'apexcharts'; // Import ApexOptions for type safety
+import { ApexOptions } from 'apexcharts'; 
 
 const SparklineChart: React.FC<{ data: number[]; label: string }> = ({ data, label }) => {
   const options: ApexOptions = {
     chart: {
       sparkline: { enabled: true },
-      toolbar: { show: true }, // Hide toolbar for sparklines
+      toolbar: { show: true }, 
     },
     title: {
       text: label,
@@ -17,26 +17,24 @@ const SparklineChart: React.FC<{ data: number[]; label: string }> = ({ data, lab
       },
     },
     stroke: {
-      curve: 'smooth' as const, // Use 'as const' to ensure type safety
-      width: 2, // Adjust stroke width
-      colors: ['#008FFB'], // Customize stroke color
+      curve: 'smooth' as const, 
+      width: 2, 
+      colors: ['#008FFB'], 
     },
     xaxis: {
-      categories: data.map((_, index) => index + 1), // Generate category labels based on data index
-      labels: { show: false }, // Hide x-axis labels for sparklines
-      tooltip: { enabled: false }, // Disable x-axis tooltip
+      categories: data.map((_, index) => index + 1), 
+      labels: { show: false }, 
+      tooltip: { enabled: false }, 
     },
     yaxis: {
-      show: false, // Hide y-axis
+      show: false, 
     },
     grid: {
-      show: false, // Hide gridlines
+      show: false, 
     },
   };
 
   const series = [{ name: label, data }];
-
-  // Check if data is empty and render a message or the chart accordingly
   return (
     <div>
       {data.length > 0 ? (

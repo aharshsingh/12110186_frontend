@@ -1,7 +1,7 @@
 // src/components/TimeSeriesChart.tsx
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { ApexOptions } from 'apexcharts';  // Import ApexOptions for type safety
+import { ApexOptions } from 'apexcharts';  
 
 type TimeSeriesChartProps = {
   data: { date: string; visitors: number }[];
@@ -23,7 +23,7 @@ const TimeSeriesChart: React.FC<TimeSeriesChartProps> = ({ data }) => {
         zoom: {
           type: 'x',
           enabled: true,
-          autoScaleYaxis: true,  // Automatically scale the Y-axis based on data
+          autoScaleYaxis: true,  
         },
         toolbar: {
           autoSelected: 'zoom',
@@ -42,11 +42,11 @@ const TimeSeriesChart: React.FC<TimeSeriesChartProps> = ({ data }) => {
       yaxis: {
         labels: {
           formatter: function (value: number) {
-            return value.toFixed(0); // Ensure no decimals in Y-axis values if not needed
+            return value.toFixed(0); 
           },
         },
-        min: 0,  // Ensure the minimum Y-axis value is 0
-        forceNiceScale: true,  // Enables a "nice" scale on the Y-axis
+        min: 0,
+        forceNiceScale: true,  
       },
       stroke: { 
         curve: 'smooth',

@@ -1,7 +1,6 @@
-// src/components/ColumnChart.tsx
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { ApexOptions } from 'apexcharts';  // Importing ApexOptions for type safety
+import { ApexOptions } from 'apexcharts';
 
 type ColumnChartProps = {
   data: { country: string; visitors: number }[];
@@ -17,20 +16,20 @@ const ColumnChart: React.FC<ColumnChartProps> = ({ data }) => {
     ],
     options: {
       chart: {
-        type: 'bar',  // This is now strictly typed as 'bar', which ApexOptions expects.
+        type: 'bar',
       },
       xaxis: {
-        categories: data.map(d => d.country),  // List of country names on X-axis
+        categories: data.map(d => d.country),
       },
       dataLabels: {
-        enabled: true,  // Show data labels on the bars
+        enabled: true,
       },
       title: {
-        text: 'Visitors by Country',  // Title of the chart
-        align: 'left',  // Align the title in the center
+        text: 'Visitors by Country',
+        align: 'left',
         style: {
-          fontSize: '20px',  // Customize the font size if needed
-          fontWeight: 'bold',  // Make it bold
+          fontSize: '20px',
+          fontWeight: 'bold',
         },
       },
     },
