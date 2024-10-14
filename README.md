@@ -33,5 +33,5 @@ Before you can run this project locally, ensure you have:
 1. Clone this repository:
 
    ```bash
-   git clone https://github.com/yourusername/booking-insights-dashboard.git
+   git clone https://github.com/aharshsingh/12110186_frontend.git
    cd booking-insights-dashboard
